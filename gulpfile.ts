@@ -97,7 +97,6 @@ gulp.task('openBrowser::browser-sync', function () {
 	  	target : testCRO.targetProxy,
 	  	ws: true
 	  },
-	  plugins: ['bs-rewrite-rules'],
 	  files: ['public/'+testCRO.id+'/bundle.js'],
 	  serveStatic: ['public/' + testCRO.id],
 	  rewriteRules: [
