@@ -143,7 +143,7 @@ export function Module(obj:any):any {
 			    if (parts.length == 2) return parts.pop().split(";").shift();
 			    else return null;
 			}
-			delay(ms:any) {
+			delay(ms:number) {
 				return new Promise(function(resolve) {
 					setTimeout(function() {
 						resolve(`delayed ${ms}`);

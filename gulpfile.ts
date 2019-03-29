@@ -1,16 +1,5 @@
-import {customLog} from "./custom_module/customConsoleLog.module"
-import {language} from "./custom_module/languageCheck.module"
-import {customStyle} from "./custom_module/customStyle.module"
-import {cookieCheck} from "./custom_module/cookieCheck.module"
-import {countryCheck} from "./custom_module/countryCheck.module"
-import {appendJsOrigin} from "./custom_module/appendJsOrigin.module"
-import {customCodeInit} from "./custom_module/customCodeInit.module"
-import {mainCode} from "./custom_module/mainCode.module"
-import {mediaCheck} from "./custom_module/mediaQueryCheck.module"
-
 import {utility} from "./custom_module/utility.module"
-
-import {metaData} from "./meta_data_CRO"
+import {mainCode} from "./custom_module/mainCode.module"
 
 /*
 ==============================
@@ -33,20 +22,9 @@ const gulp = require('gulp'),
 	sourcemaps = require('gulp-sourcemaps'),
 	filePush = require('gulp-file'), //need to create file
 	fileExists = require('file-exists'),
-	buffer = require('vinyl-buffer');
+	buffer = require('vinyl-buffer'),
+	meta_data = require('./meta_data_CRO.ts'); //custom meta data form-CRO
 
-/*
-==============================
-TEST ID
-- MAKE SURE TO SET ID
-- MAKE SURE TO SET CUSTOMER
-
-for option look const 'rewriteFile-Object' below
-==============================
-*/
-const testCRO = metaData();
-
-console.dir(testCRO);
 /*
 ==============================
 PATHS - REWRITEFILE
@@ -54,7 +32,7 @@ PATHS - REWRITEFILE
 */
 
 const paths: any = {
-	main_tsFile: ['src/'+testCRO.id+'/main.ts']
+	main_tsFile: ['src/'+meta_data.testCRO.id+'/main.ts']
 };
 
 const rewriteFile: any = {
@@ -67,7 +45,7 @@ const rewriteFile: any = {
 	}
 };
 
-console.log(rewriteFile[testCRO.customer][testCRO.whichPage])
+console.log(rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage])
 
 /*
 ==============================
@@ -76,12 +54,12 @@ SEND TO MAIN.TS
 */
 
 gulp.task('replace::testIdAndUrlOriginOnMain.ts', ['create::mainCodeModule'], function() {
-	console.log(testCRO.id);
-	console.log(testCRO.targetProxy + rewriteFile[testCRO.customer][testCRO.whichPage]);
-  gulp.src("src/"+testCRO.id+"/main.ts")
-    .pipe(replace('0000', testCRO.id))
-    .pipe(replace('origin_url_string', testCRO.targetProxy + rewriteFile[testCRO.customer][testCRO.whichPage]))
-    .pipe(gulp.dest("src/"+testCRO.id+""))
+	console.log(meta_data.testCRO.id);
+	console.log(meta_data.testCRO.targetProxy + rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage]);
+  gulp.src("src/"+meta_data.testCRO.id+"/main.ts")
+    .pipe(replace('0000', meta_data.testCRO.id))
+    .pipe(replace('origin_url_string', meta_data.testCRO.targetProxy + rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage]))
+    .pipe(gulp.dest("src/"+meta_data.testCRO.id))
 });
 
 /*
@@ -94,14 +72,14 @@ GULP TASK
 gulp.task('openBrowser::browser-sync', function () {
 	bs.init({
 	  proxy: {
-	  	target : testCRO.targetProxy,
+	  	target : meta_data.testCRO.targetProxy,
 	  	ws: true
 	  },
-	  files: ['public/'+testCRO.id+'/bundle.js'],
-	  serveStatic: ['public/' + testCRO.id],
+	  files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
+	  serveStatic: ['public/' + meta_data.testCRO.id],
 	  rewriteRules: [
 	    {
-	      	match: rewriteFile[testCRO.customer][testCRO.whichPage],
+	      	match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
 	      	replace: 'bundle.js'
 	    }
 	  ]
@@ -112,54 +90,13 @@ gulp.task('openBrowser::browser-sync', function () {
 
 gulp.task('create::utilityModule', () => {
 	return filePush('utility.ts', utility(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
+	.pipe(gulp.dest("src/"+meta_data.testCRO.id))
 });
-
-/*gulp.task('create::customLogModule', () => {
-	return filePush('log.ts', customLog(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::languageModule', () => {
-	return filePush('language.ts', language(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::customStyleModule', () => {
-	return filePush('customStyle.ts', customStyle(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::cookieCheckModule', () => {
-	return filePush('cookie.ts', cookieCheck(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::mediaQueryCheckModule', () => {
-	return filePush('mediaQuery.ts', mediaCheck(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::countryCheckModule', () => {
-	return filePush('country.ts', countryCheck(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});
-
-gulp.task('create::appendJsOriginModule', () => {
-	return filePush('appendJsOrigin.ts', appendJsOrigin(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});*/
-
-/*gulp.task('create::customCodeInitModule', () => {
-	console.log('create 📁customCodeInit.ts file!');  
-	return filePush('customCodeInit.ts', customCodeInit(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
-});*/
 
 gulp.task('create::mainCodeModule', () => {
 	console.log('create main.ts file!');  
 	return filePush('main.ts', mainCode(), {src: true})
-	.pipe(gulp.dest("src/"+testCRO.id+""))
+	.pipe(gulp.dest("src/"+meta_data.testCRO.id))
 });
 
 //END CREATE FILES MODULES
@@ -173,7 +110,7 @@ const watchedBrowserify = watchify(browserify({
 	})
 	.plugin(tsify, {
 		"files": [
-	        "src/"+testCRO.id+"/*.ts"
+	        "src/"+meta_data.testCRO.id+"/*.ts"
 	    ],
 	    "compilerOptions": {
 	        "noImplicitAny": true,
@@ -200,8 +137,8 @@ const watchedBrowserify = watchify(browserify({
 );
 
 const bundle = () => {
-	console.log('------------PREPARING TEST ID: ', testCRO.id, '------------')
-	console.log('------------PREPARING TEST CUSTOMER: ', testCRO.customer, '------------')
+	console.log('------------PREPARING TEST ID: ', meta_data.testCRO.id, '------------')
+	console.log('------------PREPARING TEST CUSTOMER: ', meta_data.testCRO.customer, '------------')
 
     return watchedBrowserify
         .bundle()
@@ -209,26 +146,19 @@ const bundle = () => {
     	.pipe(buffer())
 	    .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest("public/"+testCRO.id+""))
+        .pipe(gulp.dest("public/"+meta_data.testCRO.id))
         .pipe(reload({stream:true}));
 }
 
 gulp.task('build::modules', () => {
 
-	fileExists("src/"+testCRO.id+"/main.ts").then(function(exists:boolean ) {
+	fileExists("src/"+meta_data.testCRO.id+"/main.ts").then(function(exists:boolean ) {
 		if(exists) {
-			console.log('📁modules allready created!');  
+			console.log('📁 modules allready created!');  
 		}else {
-			console.log('create 📁modules!');
+			console.log('create 📁 modules!');
 			gulp.start("create::utilityModule");
 			gulp.start("replace::testIdAndUrlOriginOnMain.ts");
-			/*gulp.start("create::customLogModule");
-			gulp.start("create::languageModule");
-			gulp.start("create::customStyleModule");
-			gulp.start("create::cookieCheckModule");
-			gulp.start("create::mediaQueryCheckModule");
-			gulp.start("create::countryCheckModule");
-			gulp.start("create::appendJsOriginModule");*/
 		}
 	})
 });

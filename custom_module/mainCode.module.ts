@@ -1,95 +1,43 @@
 export function mainCode() {
 let mainCode_str: string = `
-
-/*
-==============================
-IMPORT MODULE | STATIC
-UTILITY what we have right now are:
-
-- detect envi
-
-- detect language
-
-- detect country
-
-- detect if cookie has gender entity
-
-- detect media query: if mobile or not
-
-- settimeout in a PROMISE so use .then(), resolve(), reject()
-
-  example use:  delay(6000).then(function(result) {
-                  console.log('runs after ' + result);
-                  console.log('appended');
-                  document.getElementsByClassName('btn--orange')[0].classList.add('reza-custom-master');
-
-                });
-- setInterval to find a specifiek element, in a Promise so use .then(), resolve(), reject()
-
-  example use:  findElm('.xxx-xxx-master').then(function(result) {
-                  console.log(result);
-                });
-
-==============================
-*/
-
-import {Utility} from "./utility"
-
-/*
-==============================
-INIT DATA | STATIC
-needed for each project
-==============================
-*/
-
-export class CustomBase extends Utility {
-
-  envi:any;
-  customStyle: Function;
-  message: Function;
-  constructor(developEnvi:boolean = true) {
-    // code...
-    super(developEnvi);
-    this.envi = {
-      develop: developEnvi,
-      testId:  '0000',
-      urlOrigin: 'origin_url_string'
-    }
-    this.appendJsOrigin(this.envi.testId, this.envi.urlOrigin);
-    this.customStyle = () => {
-      var style = \`
-        <style id="t4u-custom-style">
-        
-        </style>\`;
-      document.querySelectorAll('head')[0].insertAdjacentHTML('afterbegin', style);
-    }
-    this.appendMassage(this.envi.testId);
-  }
-}
+import {Module, FindTargetFirst, Debounce} from "./utility"
 
 /*
 ==============================
 BEGIN CUSTOM CODE | DYNAMIC
+dont forget to set DEVELOP to FALSE for production!!
 ==============================
 */
 
-class V1 extends CustomBase {
-  
-  constructor(developEnvi:boolean = true) {
+@Module({
+    develop: true,
+    style: \`<style id="t4u-custom-style"></style>\`,
+    testId:  '0000',
+    urlReplaced: 'origin_url_string'
+})
+class V1 {
+    log : Function; // CUSTOM LOG()
+    match : Function; // DETECT IF ON MOBILE OR NAH: JS-MEDIA QUERY
+    language : Function; // DETECT LANGUAGE
+    country : Function; // DETECT COUNTRY
+    cookieCheck : Function; // DETECT IF THE COOKIE-VALUE
+    delay : Function; // DELAY FUNCTION - IT MADE WITH A PROMISE(); 
+    constructor() {
     // code...
-    super(developEnvi)
-  }
+    }
+    cunstomCode() {
+
+    }
 }
 
 /*
 ==============================
-VARIATION 1 | INIT
-
-dont forget to set it to FALSE for production!!
+VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variationOne = new V1();
+let variationOne:any = new V1();
+variationOne.cunstomCode();
 
 /*
 ==============================
