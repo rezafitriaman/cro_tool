@@ -18,10 +18,10 @@ var V1 = /** @class */ (function () {
         // code...
     }
     V1.prototype.cunstomCode = function (target) {
-        document.querySelectorAll(target)[0].innerHTML = 'hello master Reza';
+        document.querySelectorAll(target)[0].innerHTML = 'hello master Marthijn sddfd';
     };
     __decorate([
-        utility_1.FindTargetFirst
+        utility_1.Debounce(7000)
     ], V1.prototype, "cunstomCode", null);
     V1 = __decorate([
         utility_1.Module({

@@ -24,9 +24,9 @@ class V1 {
     constructor() {
     // code...
     }
-    @FindTargetFirst
+    @Debounce(7000)
     cunstomCode(target: string) {
-        document.querySelectorAll(target)[0].innerHTML = 'hello master Reza'
+        document.querySelectorAll(target)[0].innerHTML = 'hello master Marthijn sddfd'
     }
 }
 

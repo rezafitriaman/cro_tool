@@ -89,3 +89,14 @@ class ChangeOrder {
 
 let change = new ChangeOrder(target);
 change.init()
+
+
+/*------------------------------------------------------*/
+// config settings / stup in nood with a question
+
+/*exports.testCRO = {
+  id: 'martijn_test',
+  customer: 'gStar',
+  whichPage: 'beforeCheckout',
+  targetProxy: 'https://www.g-star.com/'
+};*/

@@ -1,5 +1,5 @@
-import {utility} from "./custom_module/utility.module"
-import {mainCode} from "./custom_module/mainCode.module"
+/*import {mainCode} from "./custom_module/mainCode.module"*/
+/*import {utility} from "./custom_module/utility.module"*/
 
 /*
 ==============================
@@ -23,7 +23,9 @@ const gulp = require('gulp'),
 	filePush = require('gulp-file'), //need to create file
 	fileExists = require('file-exists'),
 	buffer = require('vinyl-buffer'),
-	meta_data = require('./meta_data_CRO.ts'); //custom meta data form-CRO
+	meta_data = require('./meta_data_CRO.ts'),
+	mainCode = require('./custom_module/mainCode.module'),
+	utility = require('./custom_module/utility.module');
 
 /*
 ==============================
@@ -44,8 +46,6 @@ const rewriteFile: any = {
 		checkoutAndAbove: '_ui/g-star/js/app/base.11a824aec69af596fb137ffdfb67515e.js'
 	}
 };
-
-console.log(rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage])
 
 /*
 ==============================
@@ -89,13 +89,13 @@ gulp.task('openBrowser::browser-sync', function () {
 //START CREATE FILES MODULES
 
 gulp.task('create::utilityModule', () => {
-	return filePush('utility.ts', utility(), {src: true})
+	return filePush('utility.ts', utility.str, {src: true})
 	.pipe(gulp.dest("src/"+meta_data.testCRO.id))
 });
 
 gulp.task('create::mainCodeModule', () => {
 	console.log('create main.ts file!');  
-	return filePush('main.ts', mainCode(), {src: true})
+	return filePush('main.ts', mainCode.str, {src: true})
 	.pipe(gulp.dest("src/"+meta_data.testCRO.id))
 });
 
@@ -151,7 +151,6 @@ const bundle = () => {
 }
 
 gulp.task('build::modules', () => {
-
 	fileExists("src/"+meta_data.testCRO.id+"/main.ts").then(function(exists:boolean ) {
 		if(exists) {
 			console.log('📁 modules allready created!');  

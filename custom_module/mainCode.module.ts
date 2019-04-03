@@ -1,6 +1,6 @@
-export function mainCode() {
-let mainCode_str: string = `
-import {Module, FindTargetFirst, Debounce} from "./utility"
+exports.str = `
+
+import {Module, FindTargetFirst, Debounce, TryAndCatch} from "./utility"
 
 /*
 ==============================
@@ -10,8 +10,8 @@ dont forget to set DEVELOP to FALSE for production!!
 */
 
 @Module({
-    develop: true,
-    style: \`<style id="t4u-custom-style"></style>\`,
+    isDevelop: true,
+    style: \`\`,
     testId:  '0000',
     urlReplaced: 'origin_url_string'
 })
@@ -21,12 +21,13 @@ class V1 {
     language : Function; // DETECT LANGUAGE
     country : Function; // DETECT COUNTRY
     cookieCheck : Function; // DETECT IF THE COOKIE-VALUE
-    delay : Function; // DELAY FUNCTION - IT MADE WITH A PROMISE(); 
     constructor() {
     // code...
-    }
-    cunstomCode() {
 
+    }
+    @TryAndCatch
+    cunstomCode() {
+        
     }
 }
 
@@ -36,14 +37,11 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variationOne:any = new V1();
-variationOne.cunstomCode();
+let variation1:any = new V1();
+    variation1.cunstomCode();
 
 /*
 ==============================
 END CUSTOM CODE
 ==============================
 */`;
-
-return mainCode_str;
-}

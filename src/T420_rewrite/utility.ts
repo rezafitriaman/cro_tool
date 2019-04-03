@@ -1,4 +1,4 @@
-exports.str = `
+
 /*
 ==============================
 IMPORT MODULE | STATIC
@@ -43,7 +43,7 @@ export function TryAndCatch(target: any, propertyKey: string | symbol, descripto
         try{
         	originalMethod.apply(context, args);
         }catch(err) {
-		    this.logError(\`\${err.name} : \${err.message}\`);
+		    this.logError(`${err.name} : ${err.message}`);
 		}
     }
 
@@ -98,7 +98,7 @@ export function Debounce(wait:number):any {
 
             return new Promise(function(resolve) {
 				setTimeout(function() {
-					resolve(\`delayed \${wait}\`);
+					resolve(`delayed ${wait}`);
 				}, wait)}).then(function(result) {
 					context.log('runs after ' + result);
 				originalMethod.apply(context, args);
@@ -129,14 +129,14 @@ export function Module(data:any):any {
 		  	}
 		  	log(input: any) {
 				if(data.isDevelop) {
-		  			console.log(\`%ccustom-log = \`, 'color: green', input);
+		  			console.log(`%ccustom-log = `, 'color: green', input);
 				}else {
 				 	return;
 				}
 			}
 			logError(input: any) {
 				if(data.isDevelop) {
-		  			console.log(\`%ccustom-log-error = \`, 'color: red', input);
+		  			console.log(`%ccustom-log-error = `, 'color: red', input);
 				}else {
 				 	return;
 				}
@@ -158,13 +158,13 @@ export function Module(data:any):any {
 				return media;
 			}
 			language() {
-				let srclanguage = /(\\w\\w_)/g;
+				let srclanguage = /(\w\w_)/g;
 				let language = this.url.match(srclanguage);
 
 				return language;
 			}
 			country() {
-				let srcCountry = /(_\\w\\w)/g;
+				let srcCountry = /(_\w\w)/g;
 				let country = this.url.match(srcCountry);
 
 				return country;
@@ -212,4 +212,4 @@ export function Module(data:any):any {
 		}
 	}
 
-}`;
+}
