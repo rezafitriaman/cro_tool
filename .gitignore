@@ -35,3 +35,10 @@ watchify
 which
 ts-node
 public/
+browser-sync
+dev-ip
+json5
+lt
+parser
+throttleproxy
+window-size
