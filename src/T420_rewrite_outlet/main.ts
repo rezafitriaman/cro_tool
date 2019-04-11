@@ -9,9 +9,9 @@ dont forget to set DEVELOP to FALSE for production!!
 */
 
 @Module({
-    isDevelop: true,
+    isDevelop: false,
     style: ``,
-    testId: 'T420_[PLP]_removing_color_name',
+    testId: 'T007_[PLP]_removing_color_name',
     urlReplaced: 'https://www.g-star.com/_ui/g-star/js/vendor/polyfill/picturefill-3.0.2.min.js'
 })
 class V1 {
@@ -50,10 +50,11 @@ class V1 {
     @CustomEventEmitter('filterUsed')
     @TryAndCatch
     pageVersionA(targetClass:string) {
-        if (this.pageVersion == 'A') {
+        if (this.pageVersion == 'A' || this.pageVersion == null) {
             let context = this;
             let target:HTMLCollection = document.getElementsByClassName(targetClass);
 
+            context.log(this.pageVersion)
             context.removeColorName('productListerTeaser-color');
 
             target[0].addEventListener('filterUsed', function(e) {
@@ -90,7 +91,7 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 
 let variation1:any = new V1();
     variation1.pageVersionA('productLister-resultCount--header');
-    variation1.pageVersionBC('productLister-productTileInner');
+    /*variation1.pageVersionBC('productLister-productTileInner');*/
 
     
 

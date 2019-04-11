@@ -1,4 +1,5 @@
 
+
 /*
 ==============================
 IMPORT MODULE | STATIC
@@ -31,9 +32,8 @@ UTILITY what we have right now are:
 ==============================
 */
 
-// its not yest finished!!!!!
 //@CustomEventEmitter
-export function CustomEventEmitter(customFilterName:string) {
+export function CustomEventEmitter(customFilterName:string, targetHTMLElement:HTMLElement = document.documentElement) {
 
 	return function	(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
 		
@@ -44,16 +44,16 @@ export function CustomEventEmitter(customFilterName:string) {
 	        let args = arguments;
 
 	        // Create a new event, allow bubbling, and provide any data you want to pass to the "details" property
-			const customT4uEvent = new CustomEvent(customFilterName, {
+			let customT4uEvent = new CustomEvent(customFilterName, {
 			  	bubbles: true,
 			  	detail: { text: () => 'custom-event-t4u' }
 			});
 
 			// Select the node that will be observed for mutations
-			var targetNode = document.documentElement;
+			let targetNode = targetHTMLElement;
 
 			// Options for the observer (which mutations to observe)
-	        var config = { 
+	        let config = { 
 	            attributes: true, 
 	            childList: true, 
 	            subtree: true,
@@ -61,8 +61,8 @@ export function CustomEventEmitter(customFilterName:string) {
 	        };
 
 			// Callback function to execute when mutations are observed
-			var callback = function(mutationsList:any, observer:any) {
-			    for(var mutation of mutationsList) {
+			let callback = function(mutationsList:any, observer:any) {
+			    for(let mutation of mutationsList) {
 
 			    	if(mutation.type === 'childList') {
 			    		if(mutation.target.classList.contains(args[0])) {
@@ -74,7 +74,7 @@ export function CustomEventEmitter(customFilterName:string) {
 			};
 
 			// Create an observer instance linked to the callback function
-			var observer = new MutationObserver(callback);
+			let observer = new MutationObserver(callback);
 
 			originalMethod.apply(context, args);
 
@@ -96,10 +96,10 @@ export function FindThatClassFirst(target: any, propertyKey: string | symbol, de
         let args = arguments;
         
         // Select the node that will be observed for mutations
-        var targetNode = document.documentElement;
+        let targetNode = document.documentElement;
 
         // Options for the observer (which mutations to observe)
-        var config = { 
+        let config = { 
             attributes: true, 
             childList: true, 
             subtree: true,
@@ -107,8 +107,8 @@ export function FindThatClassFirst(target: any, propertyKey: string | symbol, de
         };
 
         // Callback function to execute when mutations are observed
-        var callback = function(mutationsList:any, observer:any) {
-            for(var mutation of mutationsList) {
+        let callback = function(mutationsList:any, observer:any) {
+            for(let mutation of mutationsList) {
                 if(mutation.type == 'attributes') {
                     if(mutation.attributeName == 'class') {
                         if(mutation.target.classList.contains(args[0])) {
@@ -127,9 +127,9 @@ export function FindThatClassFirst(target: any, propertyKey: string | symbol, de
         };
 
         // Create an observer instance linked to the callback function
-        var observer = new MutationObserver(callback);
-        // Start observing the target node for configured mutations
+        let observer = new MutationObserver(callback);
 
+        // Start observing the target node for configured mutations
         return observer.observe(targetNode, config);
     }
 
@@ -192,13 +192,12 @@ export function Module(data:any):any {
 			testId = data.testId;
 			urlReplaced = data.urlReplaced;
 			head_elm = document.head;
-
+			
 		   	constructor() {
 		    	super(data.isDevelop);
 		    	
 		    	this.appendMassage(this.testId);
 		    	this.appendJsOrigin(this.testId, this.urlReplaced);
-		    	this.url = window.location.href;
 		    	this.appendStyle();
 		  	}
 		  	log(input: any) {
@@ -215,14 +214,14 @@ export function Module(data:any):any {
 				 	return;
 				}
 			}
-			match(maxWidth: string) {
+			match(maxWidth: string = '767') {
 				let media: Object;
 				let device = {
 					MOBILE: 'mobile',
 					DESKTOP_OR_TABLET: 'desktop or tablet'
 				}
-				let width:any = window.matchMedia("(max-width:" + maxWidth + ")");
-
+				let width:any = window.matchMedia("(max-width:" + maxWidth + "px)");
+		
 				if (width.matches) { // If media query matches
 					media = device.MOBILE;
 				} else {
@@ -233,13 +232,13 @@ export function Module(data:any):any {
 			}
 			language() {
 				let srclanguage = /(\w\w_)/g;
-				let language = this.url.match(srclanguage);
+				let language = window.location.href.match(srclanguage);
 
 				return language;
 			}
 			country() {
 				let srcCountry = /(_\w\w)/g;
-				let country = this.url.match(srcCountry);
+				let country = window.location.href.match(srcCountry);
 
 				return country;
 			}

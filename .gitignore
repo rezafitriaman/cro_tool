@@ -1,6 +1,8 @@
 *.cmd
 *Bestand
 *js
+*js
+*png
 JSONStream
 acorn
 atob

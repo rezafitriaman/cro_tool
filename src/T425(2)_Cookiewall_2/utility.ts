@@ -31,6 +31,56 @@ UTILITY what we have right now are:
 ==============================
 */
 
+//@FindThatClassFirst
+export function FindThatClassFirst(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
+
+    let originalMethod: Function = descriptor.value;
+    // rewrite the function
+    descriptor.value = function() {
+        let context = this;
+        let args = arguments;
+        
+        // Select the node that will be observed for mutations
+        var targetNode = document.documentElement;
+        /*this.log(targetNode)*/
+        // Options for the observer (which mutations to observe)
+        var config = { 
+            attributes: true, 
+            childList: true, 
+            subtree: true,
+            attributeFilter: ['style', 'class'] 
+        };
+
+        // Callback function to execute when mutations are observed
+        var callback = function(mutationsList:any, observer:any) {
+            for(var mutation of mutationsList) {
+                if(mutation.type == 'attributes') {
+                    if(mutation.attributeName == 'class') {
+                        if(mutation.target.classList.contains(args[0])) {
+
+                            context.log('found it!')
+                            originalMethod.apply(context, args);
+                            //kill the observer
+                            setTimeout(function(){ 
+					        	context.log('observer disconnected'); 
+					        	observer.disconnect(); 
+					        }, 300);
+                        }
+                    }
+                }
+            }
+        };
+
+        // Create an observer instance linked to the callback function
+        var observer = new MutationObserver(callback);
+        // Start observing the target node for configured mutations
+
+        return observer.observe(targetNode, config);
+    }
+
+    return descriptor;
+};
+
 //@TryAndCatch
 export function TryAndCatch(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
 
@@ -45,37 +95,6 @@ export function TryAndCatch(target: any, propertyKey: string | symbol, descripto
         }catch(err) {
 		    this.logError(`${err.name} : ${err.message}`);
 		}
-    }
-
-    return descriptor;
-};
-
-//pls convert this to mutation observer
-//@FindTargetFirst
-export function FindTargetFirst(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
-
-    let customInterval: any;
-    let originalMethod: Function = descriptor.value;
-    console.log(descriptor.value)
-    // rewrite the function
-    descriptor.value = function() {
-        let context = this;
-        let args = arguments;
-
-        return new Promise(function(resolve) {
-            customInterval = setInterval(function() {
-                let target_elm = document.querySelectorAll(args[0]);
-
-                if(target_elm.length > 0) {
-                    resolve(target_elm);
-                    clearInterval(customInterval);
-                }
-            },100);
-        }).then(function(result) {
-            context.log('find it');
-            context.log(result);
-            originalMethod.apply(context, args);
-        });
     }
 
     return descriptor;
@@ -197,7 +216,7 @@ export function Module(data:any):any {
 			}
 			appendStyle() {
 		  		let styleElement:HTMLElement = document.createElement('style');
-		  		styleElement.classList.add('t4u-aa-style');
+		  		styleElement.classList.add('t4u-custom-style');
 		  		styleElement.textContent = this.style;
 		  		
 		  		this.head_elm.insertAdjacentElement('afterbegin', styleElement);
