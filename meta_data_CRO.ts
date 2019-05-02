@@ -4,8 +4,8 @@ META DATA PRODJECT CRO
 ==============================
 */
 exports.testCRO = {
-	id: 'rezafitriaman-test',
-	customer: 'gStar',
-	whichPage: 'beforeCheckout',
-	targetProxy: 'https://www.g-star.com/'
+	id: 'T69-usps_social_Freo',
+	customer: 'freo',
+	whichPage: 'all',
+	targetProxy: 'https://www.freo.nl'
 };

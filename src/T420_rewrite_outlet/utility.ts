@@ -87,13 +87,12 @@ export function CustomEventEmitter(customFilterName:string, targetHTMLElement:HT
 
 //@FindThatClassFirst
 export function FindThatClassFirst(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
-
     let originalMethod: Function = descriptor.value;
     // rewrite the function
     descriptor.value = function() {
         let context = this;
         let args = arguments;
-        
+        console.log(args[0])
         // Select the node that will be observed for mutations
         let targetNode = document.documentElement;
 

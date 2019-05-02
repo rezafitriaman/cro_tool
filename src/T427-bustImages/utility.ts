@@ -86,7 +86,7 @@ UTILITY what we have right now are:
 }*/
 
 //@FindThatClassFirst
-/*export function FindThatClassFirst(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
+export function FindThatClassFirst(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
 
     let originalMethod: Function = descriptor.value;
     // rewrite the function
@@ -110,8 +110,8 @@ UTILITY what we have right now are:
             for(let mutation of mutationsList) {
                 if(mutation.type == 'attributes') {
                     if(mutation.attributeName == 'class') {
+                    	/*context.log(mutation.target)*/
                         if(mutation.target.classList.contains(args[0])) {
-
                             context.log('found it!')
                             originalMethod.apply(context, args);
                             //kill the observer
@@ -133,7 +133,7 @@ UTILITY what we have right now are:
     }
 
     return descriptor;
-};*/
+};
 
 //@Debounce(200)
 /*export function Debounce(wait:number):any {

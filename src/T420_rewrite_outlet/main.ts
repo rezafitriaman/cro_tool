@@ -9,7 +9,7 @@ dont forget to set DEVELOP to FALSE for production!!
 */
 
 @Module({
-    isDevelop: false,
+    isDevelop: true,
     style: ``,
     testId: 'T007_[PLP]_removing_color_name',
     urlReplaced: 'https://www.g-star.com/_ui/g-star/js/vendor/polyfill/picturefill-3.0.2.min.js'
@@ -80,6 +80,14 @@ class V1 {
                 context.onHoverRemoveColor('productTile__style-variant');
             });
         }
+
+    }
+    @TryAndCatch
+    lauraATest(target:string) {
+        if(this.pageVersion == 'A') {
+            let context = this;
+
+        }
     }
 }
 
@@ -90,8 +98,9 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 */
 
 let variation1:any = new V1();
-    variation1.pageVersionA('productLister-resultCount--header');
+    /*variation1.pageVersionA('productLister-resultCount--header');*/
     /*variation1.pageVersionBC('productLister-productTileInner');*/
+    variation1.lauraATest('productLister-resultCount--header');
 
     
 
