@@ -1,10 +1,10 @@
-exports.str =`
+
 //@CustomEventEmitter
-export function CustomEventEmitter(customFilterName:string, , className:string) {
+export function CustomEventEmitter(customFilterName:string, className:string ) {
 
 	return function	(target: any, propertyKey: string | symbol, descriptor:PropertyDescriptor): any {
 		//Polyfill Internet Explorer >= 9
-		//START Polyfill
+		//START Polyfills
 		(function () {
 			if ( typeof (<any>window).CustomEvent === "function" ) return false;
 
@@ -20,8 +20,8 @@ export function CustomEventEmitter(customFilterName:string, , className:string) 
 			(<any>window).CustomEvent = CustomEvent;
 		})();
 		//END Polyfill
-
 		let originalMethod: Function = descriptor.value;
+
 		// rewrite the function
 		descriptor.value = function() {
 	        let context = this;
@@ -52,12 +52,13 @@ export function CustomEventEmitter(customFilterName:string, , className:string) 
 	        };
 
 			// Callback function to execute when mutations are observed
-			let callback = function(mutationsList:any, observer:any) {
-			    mutationsList.forEach(function(mutation:any) {
+			let callback = function(mutationsList:any) {
 
-			    	if(mutation.type === 'childList') {
+			    mutationsList.forEach(function(mutation:any) {
+			    	if(mutation.type === 'childList') {	
+
 			    		if(mutation.target.classList.contains(classList)) {
-			    			context.log(mutation.target)
+		
 			            	mutation.target.dispatchEvent(customT4uEvent);
 			            }
 			    	}
@@ -75,4 +76,4 @@ export function CustomEventEmitter(customFilterName:string, , className:string) 
 	    }
 	    return descriptor;
 	}
-};`;
+};

@@ -1,18 +1,18 @@
-exports.str = `
+
 import {Develop} from "./develop"
 
 import {TryAndCatch} from "./tryAndCatch"
-import {CustomEventEmitter} from "./customEventEmitter"
+/*import {CustomEventEmitter} from "./customEventEmitter"
 import {FindThatClassFirst} from "./findThatClassFirst"
 import {Debounce} from "./debounce"
 
 import {Cookie} from "./cookie"
 import {Language} from "./languages"
-import {Country} from "./country"
+import {Country} from "./country"*/
 import {Style} from "./style"
-import {MediaQuery} from "./mediaQuery"
+/*import {MediaQuery} from "./mediaQuery"
 import {CustomLog} from "./log"
-import {NodeListExist} from "./nodeListExist"
+import {NodeListExist} from "./nodeListExist"*/
 
 /*
 ==============================
@@ -22,11 +22,19 @@ dont forget to set DEVELOP to FALSE for production!!
 */
 
 @Develop({
-    isDevelop: true,
-    testId:  '0000',
-    urlReplaced: 'origin_url_string'
+    isDevelop: false,
+    testId:  'T70_CTA_herhalen_Freo',
+    urlReplaced: 'https://www.freo.nlScripts/FreoWebsite/polyfills.js'
 })
-class V1 {
+@Style(`
+    .usp {
+        background-color : #F6F6F7!important;
+    }
+    .usp .usp__item a, .usp__item a:hover {
+        color: #636a73!important;
+    }
+`)
+class base {
     //STANDARD PROPERTY
     log : Function; // CUSTOM LOG()
     mediaQuery : Function; // DETECT IF ON MOBILE OR NAH: JS-MEDIA QUERY
@@ -48,17 +56,43 @@ class V1 {
     }
 }
 
+@Style(`
+    .usp .icon.icon-check {
+        color: #13B938!important;
+    }
+`)
+class V1 extends base {
+    
+    constructor() {
+        // code...
+        super();
+    }
+}
+
+@Style(`
+    .usp .icon.icon-check {
+        color: #F28231!important;
+    }
+`)
+class V2 extends base {
+    
+    constructor() {
+        // code...
+        super();
+    }
+}
+
 /*
 ==============================
 VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variation:any = new V1();
-    variation.cunstomCode();
+let variation1:any = new V1();
+    variation1.cunstomCode();
 
 /*
 ==============================
 END CUSTOM CODE
 ==============================
-*/`;
+*/

@@ -7,8 +7,8 @@ import {FindThatClassFirst} from "./findThatClassFirst"
 import {Debounce} from "./debounce"*/
 
 import {Cookie} from "./cookie" //this.cookieCheck('Freo_cookieLevel');
-import {Language} from "./languages"
-import {Country} from "./country"
+/*import {Language} from "./languages"
+import {Country} from "./country"*/
 import {Style} from "./style"
 import {MediaQuery} from "./mediaQuery"
 import {CustomLog} from "./log"
@@ -22,7 +22,7 @@ dont forget to set DEVELOP to FALSE for production!!
 */
 
 @Develop({
-    isDevelop: true,
+    isDevelop: false,
     testId:  'T69-usps_social_Freo',
     urlReplaced: 'https://www.freo.nl/Scripts/FreoWebsite/polyfills.js'
 })
@@ -30,15 +30,31 @@ dont forget to set DEVELOP to FALSE for production!!
     .st0{fill:#F48726;}
     .st1{fill-rule:evenodd;clip-rule:evenodd;fill:#F48726;}
     svg {
-        width: 30px;
+        width: 40px;
     }
     .t4u-m {
         margin-left: 10px;
         margin-right: 5px;
+        font-weight: bold;
+        font-size: 20px;
     }
     .proof-snippet li {
         display: flex;
         align-items: center;
+        justify-content: center;
+    }
+    @media only screen and (max-width: 749px) {
+      .proof-snippet li {
+        justify-content: unset;
+      }
+    }
+    @media only screen and (min-width: 749px) {
+      .check-list li {
+           font-size: 12px!important;
+      }
+      .check-list li .t4u-m {
+           font-size: 13px;
+      }
     }
 `)
 @MediaQuery
@@ -114,8 +130,8 @@ class V1 extends base {
                                     `<span class="orange t4u-m">70.000+ </span> bezoekers per maand`];
     }
     @TryAndCatch
-    cunstomCode() {
-        /*if(this.containerHomePage.length > 0) {
+    customCode() {
+        if(this.containerHomePage.length > 0) {
             this.deleteOriginLi(this.containerHomePage);
             this.appendNewUsp(this.containerHomePage, this.textsHomePageV1);
         }else if(this.containerVrijblijvende.length > 0) {
@@ -126,14 +142,14 @@ class V1 extends base {
                 this.deleteOriginLi(this.containerVrijblijvende);
                 this.appendNewUsp(this.containerVrijblijvende, this.textsVrijblijvendeV1);
             }
-        }*/
+        }
         
         //test
          // global variable
-        var allUserData = [];
+        /*var allUserData = [];*/
 
         // generic logStuff function that prints to console
-        function logStuff (userData:any) {
+        /*function logStuff (userData:any) {
             if ( typeof userData === "string")
             {
                 console.log(userData);
@@ -146,18 +162,18 @@ class V1 extends base {
 
             }
 
-        }
+        }*/
 
         // A function that takes two parameters, the last one a callback function
-        function getInput (options:any, callback:any) {
+        /*function getInput (options:any, callback:any) {
             allUserData.push (options);
             callback (options);
 
-        }
+        }*/
 
         // When we call the getInput function, we pass logStuff as a parameter.
         // So logStuff will be the function that will called back (or executed) inside the getInput function
-        getInput ({name:"Rich", speciality:"JavaScript"}, logStuff);
+        /*getInput ({name:"Rich", speciality:"JavaScript"}, logStuff);*/
         //  name: Rich
         // speciality: JavaScript
     }
@@ -178,7 +194,7 @@ class V2 extends base {
                                     `<span class="orange t4u-m">11 </span> jaar actief als online leenspecialist`];
     }
     @TryAndCatch
-    cunstomCode() {
+    customCode() {
         if(this.containerHomePage.length > 0) {
             this.deleteOriginLi(this.containerHomePage);
             this.appendNewUsp(this.containerHomePage, this.textsHomePageV1);
@@ -201,8 +217,8 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variation1:any = new V1();
-    variation1.cunstomCode();
+let variation:any = new V1();
+    variation.customCode();
 
 /*
 ==============================

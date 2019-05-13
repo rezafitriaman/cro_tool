@@ -46,9 +46,6 @@ PATHS - REWRITEFILE
 ==============================
 */
 
-gulp.task('test', function() {
-	console.log(mainCode.str)
-});
 
 const paths: any = {
 	main_tsFile: ['src/'+meta_data.testCRO.id+'/main.ts']
