@@ -43,7 +43,9 @@ class V1 {
     //PUT HERE UR NODELIST - SELECTOR
     _labels : NodeList;
     //PUT OTHERS HERE
-    _copy : objCopy
+    _copy : objCopy;
+    _phoneIe : HTMLElement;
+    _mailIe : HTMLElement
     constructor() {
         // code...
         this._copy = {
@@ -51,6 +53,8 @@ class V1 {
             email : "Uw mailadres gebruiken we om de status van uw aanvraag te delen"                        
         }
         this._labels = document.querySelectorAll('label');
+        this._phoneIe = document.querySelectorAll('label')[81];
+        this._mailIe = document.querySelectorAll('label')[82];
     }
     @TryAndCatch
     createSpan(target:ParentNode, copy:string) {
@@ -63,15 +67,24 @@ class V1 {
     }
     @TryAndCatch
     cunstomCode() {
-        this._labels.forEach((label:HTMLLabelElement) => {
-            if(label.htmlFor == "field-EmailAddress") { 
-                let target:ParentNode = label.parentNode;
-                target && this.createSpan(target, this._copy.email);
-            } else if (label.htmlFor == "field-PhoneNumber") {
-                let target = label.parentNode;
-                target && this.createSpan(target, this._copy.telefoon);
-            }
-        });
+        if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || navigator.userAgent.indexOf("Trident/") > -1 ){ 
+            // do stuff with ie-users
+            var phoneParent = this._phoneIe.parentNode;
+            var mailParent = this._mailIe.parentNode;
+
+            phoneParent && this.createSpan(phoneParent, this._copy.telefoon);
+            mailParent && this.createSpan(mailParent, this._copy.email);
+        }else {
+            this._labels.forEach((label:HTMLLabelElement) => {
+                if(label.htmlFor == "field-EmailAddress") { 
+                    let target:ParentNode = label.parentNode;
+                    target && this.createSpan(target, this._copy.email);
+                } else if (label.htmlFor == "field-PhoneNumber") {
+                    let target = label.parentNode;
+                    target && this.createSpan(target, this._copy.telefoon);
+                }
+            });
+        }
     }
 }
 
