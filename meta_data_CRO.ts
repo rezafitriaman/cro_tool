@@ -4,8 +4,8 @@ META DATA PRODJECT CRO
 ==============================
 */
 exports.testCRO = {
-	id: 'T72_Toelichting_Freo',
+	id: 'T78-RelevantUSPleendoel',
 	customer: 'freo',
 	whichPage: 'all',
-	targetProxy: 'https://www.freo.nl/'
+	targetProxy: 'https://www.freo.nl'
 };

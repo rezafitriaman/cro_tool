@@ -1,4 +1,4 @@
-exports.str =`
+
 //@CustomEventEmitter
 export function CustomEventEmitter(customFilterName:string, className:string) {
 
@@ -75,4 +75,4 @@ export function CustomEventEmitter(customFilterName:string, className:string) {
 	    }
 	    return descriptor;
 	}
-};`;
+};

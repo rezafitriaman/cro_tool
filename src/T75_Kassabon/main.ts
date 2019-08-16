@@ -1,8 +1,9 @@
-exports.str = `
+
 import {Develop} from "./develop"
 
 import {TryAndCatch} from "./tryAndCatch"
-import {CustomEventEmitter} from "./customEventEmitter"
+import {CustomLog} from "./log"
+/*import {CustomEventEmitter} from "./customEventEmitter"
 import {FindThatClassFirst} from "./findThatClassFirst"
 import {Debounce} from "./debounce"
 
@@ -12,7 +13,7 @@ import {Country} from "./country"
 import {Style} from "./style"
 import {MediaQuery} from "./mediaQuery"
 import {CustomLog} from "./log"
-import {NodeListExist} from "./nodeListExist"
+import {NodeListExist} from "./nodeListExist"*/
 
 /*
 ==============================
@@ -23,10 +24,11 @@ dont forget to set DEVELOP to FALSE for production!!
 
 @Develop({
     isDevelop: true,
-    testId:  '0000',
-    urlReplaced: 'origin_url_string'
+    testId:  'T75_Kassabon',
+    urlReplaced: 'https://www.freo.nl/Scripts/FreoWebsite/polyfills.js?v=4.51.0.20905'
 })
-class V1 {
+@CustomLog
+class Base {
     //STANDARD PROPERTY
     log : Function; // CUSTOM LOG()
     mediaQuery : Function; // DETECT IF ON MOBILE OR NAH: JS-MEDIA QUERY
@@ -43,8 +45,8 @@ class V1 {
 
     }
     @TryAndCatch
-    customCode() {
-        
+    cunstomCode() {
+
     }
 }
 
@@ -54,11 +56,11 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variation:any = new V1();
-    variation.customCode();
+let variation:any = new Base();
+    variation.cunstomCode();
 
 /*
 ==============================
 END CUSTOM CODE
 ==============================
-*/`;
+*/

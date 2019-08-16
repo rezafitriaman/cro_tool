@@ -53,7 +53,7 @@ const paths: any = {
 
 const rewriteFile: any = {
 	freo: {
-		all: 'Scripts/FreoWebsite/polyfills.js'
+		all: 'Scripts/FreoWebsite/polyfills.js?v=4.51.0.22683'
 	},
 	gStar: {
 		beforeCheckout: '_static/20190419144157/js/app/components/vendor/utils/lightningjs.js',
@@ -82,22 +82,23 @@ gulp.task('replace::testIdAndUrlOriginOnMain.ts', ['create::mainCodeModule'], fu
 GULP TASK
 ==============================
 */
-
+console.log(meta_data.testCRO.targetProxy);
 //START BROWSER-SYNCS
 gulp.task('openBrowser::browser-sync', function () {
 	bs.init({
-	  proxy: {
-	  	target : meta_data.testCRO.targetProxy,
-	  	ws: true
-	  },
-	  files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
-	  serveStatic: ['public/' + meta_data.testCRO.id],
-	  rewriteRules: [
-	    {
-	      	match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
-	      	replace: 'bundle.js'
-	    }
-	  ]
+	  	proxy: {
+	  		target : meta_data.testCRO.targetProxy,
+	  		ws: true
+	  	},
+		cors: true,
+			files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
+			serveStatic: ['public/' + meta_data.testCRO.id],
+			rewriteRules: [
+				{
+					match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
+					replace: 'bundle.js'
+				}
+			]
 	});
 });
 

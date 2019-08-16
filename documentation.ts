@@ -104,3 +104,139 @@ exports.testCRO = {
 };
 
 /*------------------------------------------------------*/
+
+// HTMLelement prototype test
+
+/**
+ * This sample demonstrates a `wrap` method written in pure JavaScript
+ * that works similarly to that in jQuery.
+ *
+ * If all text in the result window have red backgrounds, it worked!
+ *
+ * Answers this Stack Overflow question:
+ * http://bit.ly/pure-js-wrap
+ *
+ * Live Example: 
+ * http://jsfiddle.net/EV3J5/
+ */
+ 
+/*
+ * Wrap an HTMLElement around each element in an HTMLElement array.
+ */
+HTMLElement.prototype.wrap = function (elms) {
+    // Convert `elms` to an array, if necessary.
+    if (!elms.length) elms = [elms];
+ 
+    // Loops backwards to prevent having to clone the wrapper on the
+    // first element (see `child` below).
+    for (var i = elms.length - 1; i >= 0; i--) {
+        var child = (i > 0) ? this.cloneNode(true) : this;
+        var el = elms[i];
+ 
+        // Cache the current parent and sibling.
+        var parent = el.parentNode;
+        var sibling = el.nextSibling;
+ 
+        // Wrap the element (is automatically removed from its current
+        // parent).
+        child.appendChild(el);
+ 
+        // If the element had a sibling, insert the wrapper before
+        // the sibling to maintain the HTML structure; otherwise, just
+        // append it to the parent.
+        if (sibling) {
+            parent.insertBefore(child, sibling);
+        } else {
+            parent.appendChild(child);
+        }
+    }
+};
+ 
+//
+// Example
+//
+ 
+var message = document.querySelectorAll('.breadcrumbs__item')
+var div = document.createElement('div');
+div.className = 'reza';
+div.wrap(message);
+ 
+//test
+HTMLElement.prototype.test = function (elms) {
+    // this is the wrapper-div who is created 
+    let _this = this 
+
+    // Convet Elms to an array, if necessary
+    // so if it not a noodlist(thats an array) - then make it an array
+    if(!elms.length) elms = [elms];
+
+    for (var i = elms.length - 1; i >= 0; i--) {
+        /*console.log('elms[i] = ')
+        console.log(elms[i])
+
+        console.log('i = ')
+        console.log(i)*/
+
+        /*console.log('_this= ');
+        console.log(_this);*/
+
+        /*console.log('(i > 0)= ')
+        console.log((i > 0))*/
+
+        /*let wrapper = (i > 0) ? _this.cloneNode(true).className = 'aa' : _this;*/
+        let wrapper;
+        let el = elms[i];
+        // Cache the current parent and sibling.
+        let parent = el.parentNode
+        let sibling = el.nextSibling;
+
+        /*let parent = el.parentNode;
+        let sibling = el.nextSibling;*/
+
+        if((i > 0)) {
+            wrapper = _this.cloneNode(true);
+            wrapper.className = 'clonned';            
+        }else {
+            wrapper = _this;
+        }
+
+        /*console.log('wrapper =');
+        console.log(wrapper);*/
+
+        // Wrap the element (is automatically removed from its current
+        // parent).
+        wrapper.appendChild(el);
+
+       /* console.log(wrapper)*/
+
+        // If the element had a sibling, insert the wrapper before
+        // the sibling to maintain the HTML structure; otherwise, just
+        // append it to the parent.
+        console.log((sibling))
+        if (sibling) {
+            parent.insertBefore(wrapper, sibling);
+        } else {
+            parent.appendChild(wrapper);
+        }
+
+    }
+};
+
+var label = document.querySelectorAll('.breadcrumbs__item')
+var div = document.createElement('div');
+div.className = 'origin';
+div.test(label);
+
+//test2
+HTMLElement.prototype.rep = function (text) {
+    let _this = this;
+
+    _this.textContent = text;
+}
+
+
+let target = document.querySelector('.page-title');
+
+target.rep('Master Fitriaman');
+
+//-----------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-exports.str = `
+
 import {Develop} from "./develop"
 
 import {TryAndCatch} from "./tryAndCatch"
@@ -23,8 +23,8 @@ dont forget to set DEVELOP to FALSE for production!!
 
 @Develop({
     isDevelop: true,
-    testId:  '0000',
-    urlReplaced: 'origin_url_string'
+    testId:  'wikipedia_test',
+    urlReplaced: 'https://nl.wikipedia.org/w/index.php?title=User:Krinkle/OpenStreetMapFrame.js&action=raw&ctype=text/javascript'
 })
 class V1 {
     //STANDARD PROPERTY
@@ -61,4 +61,4 @@ let variation:any = new V1();
 ==============================
 END CUSTOM CODE
 ==============================
-*/`;
+*/
