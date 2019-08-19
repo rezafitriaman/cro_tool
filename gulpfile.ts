@@ -38,7 +38,8 @@ const mainCode = require('./custom_module/mainCode.module'),
 	style = require('./custom_module/style.module'),
 	log = require('./custom_module/log.module'),
 	develop = require('./custom_module/develop.module'),
-	nodeListExist = require('./custom_module/nodeListExist.module');
+	nodeListExist = require('./custom_module/nodeListExist.module'),
+	proxy = require('http-proxy-middleware');
 
 /*
 ==============================
@@ -85,20 +86,28 @@ GULP TASK
 console.log(meta_data.testCRO.targetProxy);
 //START BROWSER-SYNCS
 gulp.task('openBrowser::browser-sync', function () {
+
+	let jsonPlaceholderProxy = proxy('/', {
+		target: meta_data.testCRO.targetProxy,
+		changeOrigin: true, // for vhosted sites, changes host header to match to target's host
+		logLevel: 'debug'
+	});
+
 	bs.init({
-	  	proxy: {
-	  		target : meta_data.testCRO.targetProxy,
-	  		ws: true
-	  	},
+		server: {
+			baseDir: './public',
+			middleware: [jsonPlaceholderProxy]
+		},
+		port: 3000,
 		cors: true,
-			files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
-			serveStatic: ['public/' + meta_data.testCRO.id],
-			rewriteRules: [
-				{
-					match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
-					replace: 'bundle.js'
-				}
-			]
+		files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
+		serveStatic: ['public/' + meta_data.testCRO.id],
+		rewriteRules: [
+			{
+				match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
+				replace: 'bundle.js'
+			}
+		]
 	});
 });
 
