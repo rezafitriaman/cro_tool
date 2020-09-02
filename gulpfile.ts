@@ -54,7 +54,11 @@ const paths: any = {
 
 const rewriteFile: any = {
 	freo: {
+<<<<<<< HEAD
 		all: 'Scripts/FreoWebsite/polyfills.js?v=4.62.0.16987'
+=======
+		all: 'Scripts/FreoWebsite/polyfills.js?v=4.51.0.22683'
+>>>>>>> ebd9d175198ef4d7f44310fc5ee0235863a97eb1
 	},
 	gStar: {
 		beforeCheckout: '_static/20190419144157/js/app/components/vendor/utils/lightningjs.js',
@@ -97,10 +101,19 @@ gulp.task('openBrowser::browser-sync', function () {
 	});
 
 	bs.init({
+<<<<<<< HEAD
 		proxy: {
 			target : meta_data.testCRO.targetProxy,
 			ws: true
 		},
+=======
+		server: {
+			baseDir: './public',
+			middleware: [jsonPlaceholderProxy]
+		},
+		port: 3000,
+		cors: true,
+>>>>>>> ebd9d175198ef4d7f44310fc5ee0235863a97eb1
 		files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
 		serveStatic: ['public/' + meta_data.testCRO.id],
 		rewriteRules: [
