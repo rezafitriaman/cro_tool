@@ -21,7 +21,7 @@ dont forget to set DEVELOP to FALSE for production!!
 ==============================
 */
 
-@Module({
+@Develop({
     isDevelop: true,
     testId:  '0000',
     urlReplaced: 'origin_url_string'
@@ -43,7 +43,7 @@ class V1 {
 
     }
     @TryAndCatch
-    cunstomCode() {
+    customCode() {
         
     }
 }
@@ -54,8 +54,8 @@ VARIATION 1 / 2 / 3 / 4 | INIT
 ==============================
 */
 
-let variation1:any = new V1();
-    variation1.cunstomCode();
+let variation:any = new V1();
+    variation.customCode();
 
 /*
 ==============================

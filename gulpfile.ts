@@ -38,7 +38,8 @@ const mainCode = require('./custom_module/mainCode.module'),
 	style = require('./custom_module/style.module'),
 	log = require('./custom_module/log.module'),
 	develop = require('./custom_module/develop.module'),
-	nodeListExist = require('./custom_module/nodeListExist.module');
+	nodeListExist = require('./custom_module/nodeListExist.module'),
+	proxy = require('http-proxy-middleware');
 
 /*
 ==============================
@@ -46,9 +47,6 @@ PATHS - REWRITEFILE
 ==============================
 */
 
-gulp.task('test', function() {
-	console.log(mainCode.str)
-});
 
 const paths: any = {
 	main_tsFile: ['src/'+meta_data.testCRO.id+'/main.ts']
@@ -56,12 +54,15 @@ const paths: any = {
 
 const rewriteFile: any = {
 	freo: {
-		all: 'Scripts/FreoWebsite/polyfills.js'
+		all: 'Scripts/FreoWebsite/polyfills.js?v=4.62.0.16987'
 	},
 	gStar: {
 		beforeCheckout: '_static/20190419144157/js/app/components/vendor/utils/lightningjs.js',
 		checkoutAndAbove: '_ui/g-star/js/app/base.dc229c6530fb5f61e1fd41e58619c70c.js',
 		all: '_ui/g-star/js/vendor/polyfill/picturefill-3.0.2.min.js'
+	},
+	diabetesfonds: {
+		all: 'js/site.min.js?b36b9799b3c3e06865a61dd0743677ff95de6e0b'
 	}
 };
 console.log(rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage]);
@@ -85,24 +86,32 @@ gulp.task('replace::testIdAndUrlOriginOnMain.ts', ['create::mainCodeModule'], fu
 GULP TASK
 ==============================
 */
-
+console.log(meta_data.testCRO.targetProxy);
 //START BROWSER-SYNCS
 gulp.task('openBrowser::browser-sync', function () {
+
+	let jsonPlaceholderProxy = proxy('/', {
+		target: meta_data.testCRO.targetProxy,
+		changeOrigin: true, // for vhosted sites, changes host header to match to target's host
+		logLevel: 'debug'
+	});
+
 	bs.init({
-	  proxy: {
-	  	target : meta_data.testCRO.targetProxy,
-	  	ws: true
-	  },
-	  files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
-	  serveStatic: ['public/' + meta_data.testCRO.id],
-	  rewriteRules: [
-	    {
-	      	match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
-	      	replace: 'bundle.js'
-	    }
-	  ]
+		proxy: {
+			target : meta_data.testCRO.targetProxy,
+			ws: true
+		},
+		files: ['public/'+meta_data.testCRO.id+'/bundle.js'],
+		serveStatic: ['public/' + meta_data.testCRO.id],
+		rewriteRules: [
+			{
+				match: rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage],
+				replace: 'bundle.js'
+			}
+		]
 	});
 });
+console.log(rewriteFile[meta_data.testCRO.customer][meta_data.testCRO.whichPage]);
 
 
 //START CREATE FILES MODULES

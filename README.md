@@ -1,3 +1,3 @@
-# cro_tool
-cro automatic build
-it work with typescript
+# CRO-tool
+
+A tool to make cro-workflow faster
